@@ -14,4 +14,23 @@ fun main() {
     for (i in reverseRange step 2) {
         println("reverseRange wih Skip: $i")
     }
+
+    exploreWhile()
+    exploreDoWhile()
+}
+
+fun exploreDoWhile() {
+    var i = 0
+    do {
+        println("Inside do while value of i is: $i")
+        i++
+    } while (i < 5)
+}
+
+fun exploreWhile() {
+    var x = 1
+    while (x < 5) {
+        println("Value of x is $x")
+        x++;
+    }
 }
