@@ -3,8 +3,16 @@ package com.kotlinplayground.classes
 data class Course(
     val id: Int,
     val name: String,
-    val author: String
+    val author: String,
+    val courseCategory: CourseCategory = CourseCategory.DEVELOPMENT
 )
+
+enum class CourseCategory {
+    DEVELOPMENT,
+    BUSINESS,
+    DESIGN,
+    MARKETING
+}
 
 fun main() {
 
@@ -12,7 +20,7 @@ fun main() {
         "Reactive Programming in Modern Java using Project Reactor",
         "Dilip")
 
-   // println(course)
+   println(course)
 
     val course1 = Course(2,
         "Reactive Programming in Modern Java using Project Reactor",
@@ -25,4 +33,10 @@ fun main() {
     )
 
     println(course3)
+
+    val marketingCourse = Course(2,
+        "Facebook Marketing",
+        "Dilip",
+        CourseCategory.MARKETING)
+    println(marketingCourse)
 }
