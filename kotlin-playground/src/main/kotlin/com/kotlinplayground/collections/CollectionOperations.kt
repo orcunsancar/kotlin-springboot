@@ -11,6 +11,17 @@ fun main() {
     val desPredicate = {c: Course -> c.category == CourseCategory.DESIGN}
 
     exporeFilter(courseList, desPredicate)
+
+    exporeMap(courseList, devPredicate)
+}
+
+fun exporeMap(courseList: MutableList<Course>, predicate: (Course) -> Boolean) {
+
+    val courses = courseList
+        .filter(predicate)
+        .map { "${it.name} - ${it.category}" }
+        .forEach { println(it) }
+    println("courses : $courses")
 }
 
 fun exporeFilter(courseList: MutableList<Course>,
