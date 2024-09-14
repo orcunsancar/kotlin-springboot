@@ -49,3 +49,12 @@ kotlin {
 tasks.withType<Test> {
 	useJUnitPlatform()
 }
+
+sourceSets {
+	test {
+		java {
+			setSrcDirs(listOf("src/test/intg", "src/test/unit"))
+		}
+
+	}
+}
