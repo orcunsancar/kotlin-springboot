@@ -97,7 +97,7 @@ class CourseControllerUnitTest {
     @Test
     fun retrieveAllCourse() {
 
-        every { courseServiceMock.retrieveAllCourses() }.returnsMany(
+        every { courseServiceMock.retrieveAllCourses(any()) }.returnsMany(
             listOf(courseDTO(id = 1),
                     courseDTO(id = 2,
                         "Build Reactive Microservices using Spring WebFlux/SpringBoot"))
