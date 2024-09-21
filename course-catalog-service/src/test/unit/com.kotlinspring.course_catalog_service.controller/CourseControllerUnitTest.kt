@@ -13,6 +13,7 @@ import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.autoconfigure.web.reactive.AutoConfigureWebTestClient
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest
+import org.springframework.http.MediaType
 import org.springframework.test.web.reactive.server.WebTestClient
 import kotlin.test.assertEquals
 
@@ -69,6 +70,29 @@ class CourseControllerUnitTest {
 
         assertEquals("courseDTO.category must not be blank, courseDTO.name must not be blank", response)
 
+    }
+
+    @Test
+    fun addCourse_runtime_exception() {
+        //given
+        val courseDTO = courseDTO()
+        val errorMessage = "Unexpected Error Occurred!"
+        every { courseServiceMock.addCourse(any()) } throws RuntimeException(errorMessage)
+
+        //when
+        val response = webTestClient
+            .post()
+            .uri("/v1/courses")
+            .contentType(MediaType.APPLICATION_JSON)
+            .bodyValue(courseDTO)
+            .exchange()
+            .expectStatus().is5xxServerError
+            .expectBody(String::class.java)
+            .returnResult()
+            .responseBody
+
+        assertEquals(errorMessage
+            , response)
     }
     @Test
     fun retrieveAllCourse() {
