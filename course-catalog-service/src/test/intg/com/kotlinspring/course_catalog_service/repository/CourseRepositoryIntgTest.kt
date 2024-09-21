@@ -24,9 +24,18 @@ class CourseRepositoryIntgTest {
 
     }
     @Test
-    fun findbyNameContaining() {
+    fun findByNameContaining() {
 
         val courses = courseRepository.findByNameContaining("SpringBoot")
+        println("courses: $courses")
+
+        assertEquals(2, courses.size)
+    }
+
+    @Test
+    fun findByName() {
+
+        val courses = courseRepository.findCoursesByName("SpringBoot")
         println("courses: $courses")
 
         assertEquals(2, courses.size)
