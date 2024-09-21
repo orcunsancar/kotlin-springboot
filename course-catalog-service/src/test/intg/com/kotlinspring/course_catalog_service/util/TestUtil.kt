@@ -1,5 +1,6 @@
 package com.kotlinspring.course_catalog_service.util
 
+import com.kotlinspring.course_catalog_service.dto.CourseDTO
 import com.kotlinspring.course_catalog_service.entity.Course
 
 fun courseEntityList() = listOf(
@@ -12,4 +13,14 @@ fun courseEntityList() = listOf(
     Course(null,
         "Wiremock for Java Developers", "Development" ,
     )
+)
+
+fun courseDTO(
+    id: Int? = null,
+    name: String = "Build RestFul APis using Spring Boot and Kotlin",
+    category: String = "Development"
+) = CourseDTO(
+    id,
+    name,
+    category
 )
