@@ -6,6 +6,8 @@ import com.kotlinspring.course_catalog_service.service.CourseService
 import com.kotlinspring.course_catalog_service.util.courseDTO
 import com.ninjasquad.springmockk.MockkBean
 import io.mockk.every
+import io.mockk.just
+import io.mockk.runs
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
@@ -76,7 +78,7 @@ class CourseControllerUnitTest {
 
         every { courseServiceMock.updateCourse(any(), any()) } returns courseDTO(id = 100,
             name = "Build RestFul APis using SpringBoot and Kotlin1")
-           
+
         //Updated CourseDTO
         val updatedCourseDTO = Course(null,
             "Build RestFul APis using SpringBoot and Kotlin1", "Development")
@@ -92,6 +94,19 @@ class CourseControllerUnitTest {
             .responseBody
 
         assertEquals("Build RestFul APis using SpringBoot and Kotlin1", updatedCourse!!.name)
+
+    }
+
+    @Test
+    fun deleteCourse() {
+
+        every { courseServiceMock.deleteCourse(any()) } just runs
+
+        webTestClient
+            .delete()
+            .uri("/v1/courses/{courseId}", 100)
+            .exchange()
+            .expectStatus().isNoContent
 
     }
 }
