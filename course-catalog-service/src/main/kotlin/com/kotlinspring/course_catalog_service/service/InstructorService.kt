@@ -9,6 +9,7 @@ import com.kotlinspring.course_catalog_service.repository.CourseRepository
 import com.kotlinspring.course_catalog_service.repository.InstructorRepository
 import mu.KLogging
 import org.springframework.stereotype.Service
+import java.util.*
 
 @Service
 class InstructorService(val instructorRepository: InstructorRepository) {
@@ -28,5 +29,10 @@ class InstructorService(val instructorRepository: InstructorRepository) {
         return instructorEntity.let {
             InstructorDTO(it.id, it.name)
         }
+    }
+
+    fun findByInstructorId(instructorId: Int): Optional<Instructor> {
+
+        return instructorRepository.findById(instructorId)
     }
 }

@@ -1,5 +1,6 @@
 package com.kotlinspring.course_catalog_service.exceptionhandler
 
+import com.kotlinspring.course_catalog_service.exception.InstructorNotValidException
 import mu.KLogging
 import org.springframework.http.HttpHeaders
 import org.springframework.http.HttpStatus
@@ -34,8 +35,17 @@ class GlobalErrorHandler: ResponseEntityExceptionHandler() {
             .body(errors.joinToString(", ") { it})
     }
 
-    @ExceptionHandler(java.lang.Exception::class)
-    fun handleAllExceptions(ex: java.lang.Exception, request: WebRequest): ResponseEntity<Any> {
+    @ExceptionHandler(InstructorNotValidException::class)
+    fun handleInstructorNotValidException(ex: InstructorNotValidException, request: WebRequest): ResponseEntity<Any> {
+        logger.info("Exception observed: ${ex.message}", ex)
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+            .body(
+                ex.message
+            )
+    }
+
+    @ExceptionHandler(Exception::class)
+    fun handleAllExceptions(ex: Exception, request: WebRequest): ResponseEntity<Any> {
         logger.info("Exception observed: ${ex.message}", ex)
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
             .body(
