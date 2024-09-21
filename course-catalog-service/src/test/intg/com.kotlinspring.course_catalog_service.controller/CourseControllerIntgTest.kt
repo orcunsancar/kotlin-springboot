@@ -3,7 +3,9 @@ package com.kotlinspring.course_catalog_service.controller
 import com.kotlinspring.course_catalog_service.dto.CourseDTO
 import com.kotlinspring.course_catalog_service.entity.Course
 import com.kotlinspring.course_catalog_service.repository.CourseRepository
+import com.kotlinspring.course_catalog_service.repository.InstructorRepository
 import com.kotlinspring.course_catalog_service.util.courseEntityList
+import com.kotlinspring.course_catalog_service.util.instructorEntity
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
@@ -26,11 +28,19 @@ class CourseControllerIntgTest {
     @Autowired
     lateinit var courseRepository: CourseRepository
 
+    @Autowired
+    lateinit var instructorRepository: InstructorRepository
+
     @BeforeEach
     fun setUp() {
 
         courseRepository.deleteAll()
-        val courses = courseEntityList()
+        instructorRepository.deleteAll()
+
+        val instructor = instructorEntity()
+        instructorRepository.save(instructor)
+
+        val courses = courseEntityList(instructor)
         courseRepository.saveAll(courses)
 
     }
@@ -38,8 +48,10 @@ class CourseControllerIntgTest {
     @Test
     fun addCourse() {
 
+        val instructor = instructorRepository.findAll().first()
+
         val courseDTO = CourseDTO(null, "Build Restful APIs using Kotlin and SpringBoot",
-            "Development")
+            "Development", instructor.id)
 
         val savedCourseDTO = webTestClient
             .post()
@@ -95,14 +107,15 @@ class CourseControllerIntgTest {
     fun updateCourse() {
 
         //existing course
+        val instructor = instructorRepository.findAll().first()
         val course = Course(null,
-            "Build RestFul APis using SpringBoot and Kotlin", "Development")
+            "Build RestFul APis using SpringBoot and Kotlin", "Development", instructor)
         courseRepository.save(course)
 
         //courseId
         //Updated CourseDTO
-        val updatedCourseDTO = Course(null,
-            "Build RestFul APis using SpringBoot and Kotlin1", "Development")
+        val updatedCourseDTO = CourseDTO(null,
+            "Build RestFul APis using SpringBoot and Kotlin1", "Development", course.instructor!!.id)
 
         val updatedCourse = webTestClient
             .put()
@@ -122,8 +135,10 @@ class CourseControllerIntgTest {
     fun deleteCourse() {
 
         //existing course
+        val instructor = instructorRepository.findAll().first()
+
         val course = Course(null,
-            "Build RestFul APis using SpringBoot and Kotlin", "Development")
+            "Build RestFul APis using SpringBoot and Kotlin", "Development", instructor)
         courseRepository.save(course)
 
         webTestClient
