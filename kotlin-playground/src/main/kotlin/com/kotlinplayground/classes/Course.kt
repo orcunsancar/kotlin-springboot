@@ -1,5 +1,7 @@
 package com.kotlinplayground.classes
 
+import com.kotlinplayground.CourseJava
+
 data class Course(
     val id: Int,
     val name: String,
@@ -39,4 +41,11 @@ fun main() {
         "Dilip",
         CourseCategory.MARKETING)
     println(marketingCourse)
+
+    val courseJava = CourseJava(1, "Reactive Programming in Modern Java using Project Reactor", "Dilip")
+    courseJava.id = 1
+    courseJava.name = "ABC"
+    courseJava.author = "Dilip"
+
+    courseJava.printCourse()
 }
