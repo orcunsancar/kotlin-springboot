@@ -1,3 +1,5 @@
+//@file:JvmName("CourseUtils")
+
 package com.kotlinplayground.classes
 
 import com.kotlinplayground.CourseJava
@@ -7,7 +9,37 @@ data class Course(
     val name: String,
     val author: String,
     var courseCategory: CourseCategory = CourseCategory.DEVELOPMENT
+) {
+
+    @JvmField
+    var noOfCourses = 10
+
+    companion object {
+
+        const val courseName = "Kotlin SpringBoot"
+
+        @JvmStatic
+        fun printName2(name: String) {
+            println("Name is $name")
+        }
+    }
+}
+
+@JvmName("printName1")
+@JvmOverloads
+fun printName(name : String = "default"){
+    println("name : $name")
+}
+
+
+/*
+data class Course @JvmOverloads constructor(
+    val id: Int,
+    val name: String,
+    val author: String,
+    var courseCategory: CourseCategory = CourseCategory.DEVELOPEMENT
 )
+*/
 
 enum class CourseCategory {
     DEVELOPMENT,
